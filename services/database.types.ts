@@ -244,19 +244,11 @@ export type Tables<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
-    }
-    ? R
-    : never
+      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName]
   : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
       Database["public"]["Views"])
     ? (Database["public"]["Tables"] &
-        Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-        Row: infer R
-      }
-      ? R
-      : never
+        Database["public"]["Views"])[PublicTableNameOrOptions]
     : never
 
 export type TablesInsert<

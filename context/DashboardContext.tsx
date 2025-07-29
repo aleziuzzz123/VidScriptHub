@@ -1,8 +1,9 @@
 
+
 import React, { createContext, useReducer, useEffect, ReactNode, useCallback } from 'react';
-import type { Session, User, Script, Folder, Notification, WatchedTrend, Client, Trend } from '../types';
-import { supabase } from '../services/supabaseClient';
-import type { Json, Tables } from '../services/database.types';
+import type { Session, User, Script, Folder, Notification, WatchedTrend, Client, Trend } from '../types.ts';
+import { supabase } from '../services/supabaseClient.ts';
+import type { Json, Tables } from '../services/database.types.ts';
 
 // --- STATE AND INITIAL VALUES ---
 interface DashboardState {
@@ -230,7 +231,7 @@ export const DashboardProvider: React.FC<{ children: ReactNode; session: Session
                 }
                 case 'ADD_SAVED_SCRIPT_REQUEST': {
                     const { isNew, ...scriptToInsert } = action.payload.script;
-                    const { data, error } = await supabase.from('scripts').insert({ ...scriptToInsert, user_id: userId } as Tables<'scripts'>['Insert']).select().single();
+                    const { data, error } = await supabase.from('scripts').insert({ ...scriptToInsert, user_id: userId } as unknown as Tables<'scripts'>['Insert']).select().single();
                     if (error) throw error;
                     if (data) dispatch({ type: 'ADD_SAVED_SCRIPT_SUCCESS', payload: data as Script });
                     break;
