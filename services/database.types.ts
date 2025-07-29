@@ -1,5 +1,4 @@
 
-import type { Trend, ViralScoreBreakdown } from "../types";
 
 export type Json =
   | string
