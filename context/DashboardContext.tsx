@@ -184,11 +184,11 @@ export const DashboardProvider: React.FC<{ children: ReactNode; session: Session
                     
                     dispatch({ type: 'FETCH_DATA_SUCCESS', payload: {
                         user,
-                        savedScripts: (scriptsRes.data || []) as Script[],
-                        folders: [{ id: 'all', name: 'All Scripts' }, ...((foldersRes.data || []) as Folder[])],
-                        notifications: (notificationsRes.data || []) as Notification[],
-                        watchedTrends: (watchedTrendsRes.data || []) as WatchedTrend[],
-                        clients: (clientsRes.data || []) as Client[]
+                        savedScripts: scriptsRes.data || [],
+                        folders: [{ id: 'all', name: 'All Scripts' }, ...(foldersRes.data || [])],
+                        notifications: notificationsRes.data || [],
+                        watchedTrends: watchedTrendsRes.data || [],
+                        clients: clientsRes.data || []
                     }});
 
                 } catch (error: any) {
@@ -210,7 +210,7 @@ export const DashboardProvider: React.FC<{ children: ReactNode; session: Session
                 case 'ADD_NOTIFICATION_REQUEST': {
                     const { data, error } = await supabase.from('notifications').insert({ message: action.payload.message, user_id: userId }).select().single();
                     if (error) throw error;
-                    if (data) dispatch({ type: 'ADD_NOTIFICATION_SUCCESS', payload: data as Notification });
+                    if (data) dispatch({ type: 'ADD_NOTIFICATION_SUCCESS', payload: data });
                     break;
                 }
                 case 'MARK_ALL_NOTIFICATIONS_READ_REQUEST': {
@@ -232,7 +232,7 @@ export const DashboardProvider: React.FC<{ children: ReactNode; session: Session
                     const { isNew, ...scriptToInsert } = action.payload.script;
                     const { data, error } = await supabase.from('scripts').insert({ ...scriptToInsert, user_id: userId }).select().single();
                     if (error) throw error;
-                    if (data) dispatch({ type: 'ADD_SAVED_SCRIPT_SUCCESS', payload: data as Script });
+                    if (data) dispatch({ type: 'ADD_SAVED_SCRIPT_SUCCESS', payload: data });
                     break;
                 }
                 case 'UNSAVE_SCRIPT_REQUEST': {
@@ -250,7 +250,7 @@ export const DashboardProvider: React.FC<{ children: ReactNode; session: Session
                 case 'ADD_FOLDER_REQUEST': {
                     const { data, error } = await supabase.from('folders').insert({ ...action.payload.folder, user_id: userId }).select().single();
                     if (error) throw error;
-                    if (data) dispatch({ type: 'ADD_FOLDER_SUCCESS', payload: data as Folder });
+                    if (data) dispatch({ type: 'ADD_FOLDER_SUCCESS', payload: data });
                     break;
                 }
                 case 'RENAME_FOLDER_REQUEST': {
@@ -284,14 +284,14 @@ export const DashboardProvider: React.FC<{ children: ReactNode; session: Session
                 case 'ADD_CLIENT_REQUEST': {
                     const { data, error } = await supabase.from('clients').insert({ ...action.payload.clientData, agency_owner_id: userId, status: 'Pending' }).select().single();
                     if (error) throw error;
-                    if (data) dispatch({ type: 'ADD_CLIENT_SUCCESS', payload: data as Client });
+                    if (data) dispatch({ type: 'ADD_CLIENT_SUCCESS', payload: data });
                     break;
                 }
                 case 'UPDATE_CLIENT_REQUEST': {
                     const { updatedClient } = action.payload;
                     const { data, error } = await supabase.from('clients').update({ name: updatedClient.name, email: updatedClient.email, status: updatedClient.status }).eq('id', updatedClient.id).eq('agency_owner_id', userId).select().single();
                     if (error) throw error;
-                    if (data) dispatch({ type: 'UPDATE_CLIENT_SUCCESS', payload: { updatedClient: data as Client } });
+                    if (data) dispatch({ type: 'UPDATE_CLIENT_SUCCESS', payload: { updatedClient: data } });
                     break;
                 }
                 case 'DELETE_CLIENT_REQUEST': {
@@ -303,7 +303,7 @@ export const DashboardProvider: React.FC<{ children: ReactNode; session: Session
                 case 'ADD_WATCHED_TREND_REQUEST': {
                     const { data, error } = await supabase.from('watched_trends').insert({ user_id: userId, trend_data: action.payload.trend as unknown as Json }).select().single();
                     if (error) throw error;
-                    if (data) dispatch({ type: 'ADD_WATCHED_TREND_SUCCESS', payload: data as WatchedTrend });
+                    if (data) dispatch({ type: 'ADD_WATCHED_TREND_SUCCESS', payload: data });
                     break;
                 }
                 case 'REMOVE_WATCHED_TREND_REQUEST': {
