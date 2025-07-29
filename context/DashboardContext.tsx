@@ -3,7 +3,7 @@
 import React, { createContext, useReducer, useEffect, ReactNode, useCallback } from 'react';
 import type { Session, User, Script, Folder, Notification, WatchedTrend, Client, Trend } from '../types.ts';
 import { supabase } from '../services/supabaseClient.ts';
-import type { Json, Tables } from '../services/database.types.ts';
+import type { Json } from '../services/database.types.ts';
 
 // --- STATE AND INITIAL VALUES ---
 interface DashboardState {
@@ -184,11 +184,11 @@ export const DashboardProvider: React.FC<{ children: ReactNode; session: Session
                     
                     dispatch({ type: 'FETCH_DATA_SUCCESS', payload: {
                         user,
-                        savedScripts: (scriptsRes.data as Script[]) || [],
-                        folders: [{ id: 'all', name: 'All Scripts' }, ...((foldersRes.data as Folder[]) || [])],
-                        notifications: (notificationsRes.data as Notification[]) || [],
-                        watchedTrends: (watchedTrendsRes.data as WatchedTrend[]) || [],
-                        clients: (clientsRes.data as Client[]) || []
+                        savedScripts: (scriptsRes.data || []) as Script[],
+                        folders: [{ id: 'all', name: 'All Scripts' }, ...((foldersRes.data || []) as Folder[])],
+                        notifications: (notificationsRes.data || []) as Notification[],
+                        watchedTrends: (watchedTrendsRes.data || []) as WatchedTrend[],
+                        clients: (clientsRes.data || []) as Client[]
                     }});
 
                 } catch (error: any) {
@@ -208,7 +208,7 @@ export const DashboardProvider: React.FC<{ children: ReactNode; session: Session
         try {
             switch(action.type) {
                 case 'ADD_NOTIFICATION_REQUEST': {
-                    const { data, error } = await supabase.from('notifications').insert({ message: action.payload.message, user_id: userId } as Tables<'notifications'>['Insert']).select().single();
+                    const { data, error } = await supabase.from('notifications').insert({ message: action.payload.message, user_id: userId }).select().single();
                     if (error) throw error;
                     if (data) dispatch({ type: 'ADD_NOTIFICATION_SUCCESS', payload: data as Notification });
                     break;
@@ -224,14 +224,13 @@ export const DashboardProvider: React.FC<{ children: ReactNode; session: Session
                     const { data, error } = await supabase.from('profiles').update({ primary_niche: action.payload.niche, platforms: action.payload.platforms, preferred_tone: action.payload.tone }).eq('id', userId).select().single();
                     if (error) throw error;
                     if (data) {
-                        const profile = data as Tables<'profiles'>['Row'];
-                        dispatch({ type: 'COMPLETE_PERSONALIZATION_SUCCESS', payload: { primary_niche: profile.primary_niche ?? undefined, platforms: profile.platforms ?? undefined, preferred_tone: profile.preferred_tone ?? undefined }});
+                        dispatch({ type: 'COMPLETE_PERSONALIZATION_SUCCESS', payload: { primary_niche: data.primary_niche ?? undefined, platforms: data.platforms ?? undefined, preferred_tone: data.preferred_tone ?? undefined }});
                     }
                     break;
                 }
                 case 'ADD_SAVED_SCRIPT_REQUEST': {
                     const { isNew, ...scriptToInsert } = action.payload.script;
-                    const { data, error } = await supabase.from('scripts').insert({ ...scriptToInsert, user_id: userId } as unknown as Tables<'scripts'>['Insert']).select().single();
+                    const { data, error } = await supabase.from('scripts').insert({ ...scriptToInsert, user_id: userId }).select().single();
                     if (error) throw error;
                     if (data) dispatch({ type: 'ADD_SAVED_SCRIPT_SUCCESS', payload: data as Script });
                     break;
@@ -249,7 +248,7 @@ export const DashboardProvider: React.FC<{ children: ReactNode; session: Session
                     break;
                 }
                 case 'ADD_FOLDER_REQUEST': {
-                    const { data, error } = await supabase.from('folders').insert({ ...action.payload.folder, user_id: userId } as Tables<'folders'>['Insert']).select().single();
+                    const { data, error } = await supabase.from('folders').insert({ ...action.payload.folder, user_id: userId }).select().single();
                     if (error) throw error;
                     if (data) dispatch({ type: 'ADD_FOLDER_SUCCESS', payload: data as Folder });
                     break;
@@ -283,7 +282,7 @@ export const DashboardProvider: React.FC<{ children: ReactNode; session: Session
                     break;
                 }
                 case 'ADD_CLIENT_REQUEST': {
-                    const { data, error } = await supabase.from('clients').insert({ ...action.payload.clientData, agency_owner_id: userId, status: 'Pending' } as Tables<'clients'>['Insert']).select().single();
+                    const { data, error } = await supabase.from('clients').insert({ ...action.payload.clientData, agency_owner_id: userId, status: 'Pending' }).select().single();
                     if (error) throw error;
                     if (data) dispatch({ type: 'ADD_CLIENT_SUCCESS', payload: data as Client });
                     break;
