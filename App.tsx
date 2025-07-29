@@ -1,14 +1,13 @@
-
 import React, { useState, useEffect } from 'react';
-import { Dashboard } from './components/Dashboard.tsx';
-import type { Client, Session } from './types.ts';
-import { DashboardProvider } from './context/DashboardContext.tsx';
-import { supabase } from './services/supabaseClient.ts';
-import { AuthPage } from './components/AuthPage.tsx';
-import { SalesPage } from './components/SalesPage.tsx';
-import { Oto1Page } from './components/Oto1Page.tsx';
-import { Oto2Page } from './components/Oto2Page.tsx';
-import { Oto3Page } from './components/Oto3Page.tsx';
+import { Dashboard } from './components/Dashboard';
+import { SalesPage } from './components/SalesPage';
+import { Oto1Page } from './components/Oto1Page';
+import { Oto2Page } from './components/Oto2Page';
+import { Oto3Page } from './components/Oto3Page';
+import { AuthPage } from './components/AuthPage';
+import { DashboardProvider } from './context/DashboardContext';
+import { supabase } from './services/supabaseClient';
+import type { Client, Session } from './types';
 
 const App: React.FC = () => {
   const [session, setSession] = useState<Session | null>(null);
