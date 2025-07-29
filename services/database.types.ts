@@ -1,5 +1,3 @@
-
-
 export type Json =
   | string
   | number
@@ -138,7 +136,15 @@ export type Database = {
           platforms?: ("tiktok" | "instagram" | "youtube")[] | null
           preferred_tone?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       scripts: {
         Row: {
