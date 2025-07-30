@@ -9,7 +9,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-    <link rel="stylesheet" href="/index.css" />
+    
+    <!-- Load React directly from CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Load Babel for TypeScript compilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
     <style>
       body {
         font-family: 'Inter', sans-serif;
@@ -17,34 +24,30 @@
       h1, h2, h3, h4, h5, h6 {
         font-family: 'Poppins', sans-serif;
       }
-      /* Custom Range Slider Styles */
+      /* Your existing styles */
       input[type='range'] {
         -webkit-appearance: none;
         appearance: none;
         background: transparent;
         cursor: pointer;
       }
-
       input[type='range']:focus {
         outline: none;
       }
-
       input[type='range']::-webkit-slider-runnable-track {
         background: #4A3F7A;
         height: 0.5rem;
         border-radius: 0.5rem;
       }
-
       input[type='range']::-moz-range-track {
         background: #4A3F7A;
         height: 0.5rem;
         border-radius: 0.5rem;
       }
-
       input[type='range']::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        margin-top: -4px; /* Adjust to center thumb on track */
+        margin-top: -4px;
         background-color: #DAFF00;
         height: 1.25rem;
         width: 1.25rem;
@@ -59,7 +62,6 @@
         outline: 3px solid rgba(218, 255, 0, 0.5);
         outline-offset: 2px;
       }
-
       input[type='range']::-moz-range-thumb {
         background-color: #DAFF00;
         height: 1.25rem;
@@ -68,7 +70,7 @@
         border: 2px solid white;
         transition: background-color 150ms ease-in-out, transform 150ms ease-in-out;
       }
-       input[type='range']:hover::-moz-range-thumb {
+      input[type='range']:hover::-moz-range-thumb {
         transform: scale(1.1);
       }
       input[type='range']:focus::-moz-range-thumb {
@@ -76,12 +78,37 @@
         outline-offset: 2px;
       }
     </style>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<link rel="stylesheet" href="/index.css">
-</head>
+  </head>
   <body class="bg-[#1A0F3C]">
     <div id="root"></div>
-    <script type="text/babel" data-presets="react,typescript" src="/index.tsx"></script>
-  <script type="module" src="/index.tsx"></script>
-</body>
+    
+    <script type="text/babel">
+      // Define libraries that your components will need
+      window.React = React;
+      window.ReactDOM = ReactDOM;
+      
+      // Load Supabase
+      import('https://esm.sh/@supabase/supabase-js@2.45.0').then(supabase => {
+        window.supabase = supabase;
+        
+        // Load your App component
+        import('./App.tsx').then(AppModule => {
+          const App = AppModule.default;
+          const { createRoot } = ReactDOM;
+          const root = createRoot(document.getElementById('root'));
+          root.render(React.createElement(React.StrictMode, null, React.createElement(App)));
+        }).catch(error => {
+          console.error('Error loading App:', error);
+          // Show error message to user
+          const root = ReactDOM.createRoot(document.getElementById('root'));
+          root.render(React.createElement('div', {
+            style: { color: 'white', padding: '50px', textAlign: 'center' }
+          }, 'Loading error: ' + error.message));
+        });
+        
+      }).catch(error => {
+        console.error('Error loading Supabase:', error);
+      });
+    </script>
+  </body>
 </html>
