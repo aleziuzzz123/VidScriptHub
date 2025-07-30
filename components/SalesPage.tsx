@@ -1,6 +1,6 @@
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'https://esm.sh/react@^18.3.1';
 import { CheckCircleIcon } from './icons/CheckCircleIcon.tsx';
 import { PlusIcon } from './icons/PlusIcon.tsx';
 import { MinusIcon } from './icons/MinusIcon.tsx';
@@ -560,12 +560,12 @@ export const SalesPage: React.FC<SalesPageProps> = ({ onPurchaseClick, onDashboa
                                      <i className="fa-solid fa-rocket text-4xl text-[#DAFF00]"></i>
                                 </div>
                                 <div className="flex-grow text-center md:text-left">
-                                    <h3 className="text-2xl font-bold text-[#1A1A1A]">VidScriptHub Main App</h3>
+                                    <h3 className="text-2xl font-bold text-[#1A0F3C]">VidScriptHub Main App</h3>
                                     <p className="text-gray-700">The complete, unrestricted access to our revolutionary AI script writing hub.</p>
                                 </div>
                                 <div className="font-bold text-lg text-center md:text-right flex-shrink-0">
                                     <p className="text-gray-500 line-through text-sm">$997</p>
-                                    <p className="text-[#1A1A1A]">Value: ${mainProductValue}</p>
+                                    <p className="text-[#1A0F3C]">Value: ${mainProductValue}</p>
                                 </div>
                             </div>
                             

@@ -1,4 +1,4 @@
-import React, { useMemo, useContext } from 'react';
+import React, { useMemo, useContext } from 'https://esm.sh/react@^18.3.1';
 import type { Client } from '../types.ts';
 import { DashboardContext } from '../context/DashboardContext.tsx';
 

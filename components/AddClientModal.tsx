@@ -1,6 +1,6 @@
 
 
-import React, { useState } from 'react';
+import React, { useState } from 'https://esm.sh/react@^18.3.1';
 import type { Client } from '../types.ts';
 
 interface AddClientModalProps {

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef } from 'https://esm.sh/react@^18.3.1';
 import { ScriptCard } from './ScriptCard.tsx';
 import type { Script, Folder } from '../types.ts';
 

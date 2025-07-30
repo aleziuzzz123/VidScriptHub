@@ -1,6 +1,6 @@
 
 
-import React from 'react';
+import React from 'https://esm.sh/react@^18.3.1';
 import type { Script } from '../types.ts';
 import { ScriptCard } from './ScriptCard.tsx';
 

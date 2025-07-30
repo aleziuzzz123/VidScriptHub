@@ -1,11 +1,10 @@
 
 
-
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'https://esm.sh/react@^18.3.1';
 import { TrendCard } from './TrendCard.tsx';
 import type { Trend } from '../types.ts';
 import { fetchTrendingTopics, QUOTA_ERROR_MESSAGE } from '../services/geminiService.ts';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'https://esm.sh/date-fns@^4.1.0';
 import { DashboardContext } from '../context/DashboardContext.tsx';
 
 interface TrendingTopicsViewProps {

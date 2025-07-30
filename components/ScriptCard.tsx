@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'https://esm.sh/react@^18.3.1';
 import type { Script, Folder } from '../types.ts';
 
 interface ScriptCardProps {

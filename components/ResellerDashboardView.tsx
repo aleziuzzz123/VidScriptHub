@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'https://esm.sh/react@^18.3.1';
 
 interface StatCardProps { icon: string; value: string; label: string; }
 interface ResellerDashboardViewProps { 

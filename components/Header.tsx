@@ -1,5 +1,5 @@
-import React from 'react';
-import { SparklesIcon } from './icons/SparklesIcon';
+import React from 'https://esm.sh/react@^18.3.1';
+import { SparklesIcon } from './icons/SparklesIcon.tsx';
 
 export const Header: React.FC = () => {
   return (

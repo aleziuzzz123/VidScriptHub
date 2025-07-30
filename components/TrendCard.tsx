@@ -1,6 +1,6 @@
 
 
-import React from 'react';
+import React from 'https://esm.sh/react@^18.3.1';
 import { RadialProgress } from './icons/RadialProgress.tsx';
 import type { Trend } from '../types.ts';
 

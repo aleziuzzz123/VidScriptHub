@@ -1,5 +1,5 @@
 
-import type { AuthSession as Session } from '@supabase/supabase-js';
+import type { AuthSession as Session } from 'https://esm.sh/@supabase/supabase-js@^2.45.0';
 
 export interface Folder {
   id: string;
